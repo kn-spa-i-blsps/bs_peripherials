@@ -1,24 +1,18 @@
-[
-    build-system 
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
 
-]
-requires = ["setuptools>=68". "wheel"]
-build-backend="setuptools.backend.legacy:build"
-
-[
-    project
-]
-name = "bs-perihperials"
-version= "0.1.0"
-description = "BS AUV peripherials control library"
+[project]
+name = "bs-peripherals"
+version = "0.1.0"
+description = "BS AUV peripherals control library"
 requires-python = ">=3.10"
+dependencies = [
+    "adafruit-circuitpython-pca9685",
+    "adafruit-blinka",
+    "adafruit-circuitpython-motor",
+    "numpy",
+]
 
-dependecies = [
-    "adafruit-circuitpython-pca9685"
-    "adafruit-blinka"
-    "numpy"
-]
-[
-    tool.setuptools.packages.find
-]
+[tool.setuptools.packages.find]
 where = ["src"]
