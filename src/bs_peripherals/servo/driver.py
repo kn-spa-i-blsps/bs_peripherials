@@ -11,14 +11,15 @@ except (ImportError, NotImplementedError, ValueError):
 MIN_PULSE = 800
 MAX_PULSE = 2200
 
+
 class PCA9685Driver:
-    def __init__(self, i2c_address: int=0x40, frequency_hz: int=50):
-       
+    def __init__(self, i2c_address: int = 0x40, frequency_hz: int = 50):
         try:
-            i2c=busio.I2C(board.SCL, board.SDA)
+            i2c = busio.I2C(board.SCL, board.SDA)
             self._pca = PCA9685(i2c, address=i2c_address)
             self._pca.frequency = frequency_hz
-        except (Exception):
+        except Exception as e:
+            print(f"I2C init failed: {e}")
             self._pca = None
 
     def get_servo(self, channel: int):
