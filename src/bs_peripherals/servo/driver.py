@@ -4,9 +4,9 @@ try:
     from adafruit_pca9685 import PCA9685
     from adafruit_motor import servo
     _HW_AVAILABLE = True
-except (ImportError, NotImplementedError, ValueError):
+except (ImportError, NotImplementedError, ValueError) as e:
+    print(f"HW import failed: {e}")
     _HW_AVAILABLE = False
-
 
 MIN_PULSE = 800
 MAX_PULSE = 2200
@@ -14,6 +14,10 @@ MAX_PULSE = 2200
 
 class PCA9685Driver:
     def __init__(self, i2c_address: int = 0x40, frequency_hz: int = 50):
+        if not _HW_AVAILABLE:
+            print("Hardware not available, running in simulation mode")
+            self._pca = None
+            return
         try:
             i2c = busio.I2C(board.SCL, board.SDA)
             self._pca = PCA9685(i2c, address=i2c_address)
